@@ -1,0 +1,7 @@
+deepseek:
+  client: fake
+  site: sites/deepseek.yaml
+
+qwen:
+  client: fake
+  site: sites/qwen.yaml
