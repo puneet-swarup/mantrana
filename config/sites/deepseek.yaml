@@ -1,0 +1,27 @@
+url: https://chat.deepseek.com/
+
+input:
+  selectors:
+    - "#chat-input"
+    - "textarea[placeholder*='Send a message']"
+    - "textarea[data-testid='chat-input']"
+    - "div[contenteditable][role='textbox']"
+
+send:
+  selectors:
+    - "button[aria-label='Send']"
+
+messages:
+  user:
+    - ".fa81"
+    - "[data-role='user']"
+  assistant:
+    - ".ds-markdown.ds-markdown--block"
+    - ".f9bf7997.c05b5566"
+
+streaming:
+  stop_button:
+    - ".stop-button"
+    - "button[aria-label='Stop']"
+  stable_interval_ms: 2000
+  stable_checks: 2

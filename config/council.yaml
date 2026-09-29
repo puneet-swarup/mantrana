@@ -1,0 +1,47 @@
+moderator:
+  role: moderator
+  prompt: prompts/moderator.md
+  catalog: prompts/role_catalog.md
+  model: deepseek
+  fallback_model: qwen
+  invariants:
+    always_include: [CRITIC]
+    per_domain:
+      - match: [loan, payment, kyc, bank]
+        must_include: [COMPLIANCE]
+      - match: [health, patient, phi]
+        must_include: [COMPLIANCE]
+
+agents:
+  SME:
+    prompt: prompts/roles/sme.md
+    model: deepseek
+    max_words: 150
+  ARCHITECT:
+    prompt: prompts/roles/architect.md
+    model: deepseek
+    max_words: 150
+  CRITIC:
+    prompt: prompts/roles/critic.md
+    model: deepseek
+    max_words: 150
+  COMPLIANCE:
+    prompt: prompts/roles/compliance.md
+    model: deepseek
+    max_words: 150
+  CODER:
+    prompt: prompts/roles/coder.md
+    model: deepseek
+    type: tool_agent
+    tools: [write_file, read_file, run_shell, raise_alarm]
+
+loop:
+  max_rounds: 3
+  max_turns: 30
+  log_trim_after: 15
+  pin: [role_catalog, problem_statement]
+
+alarms:
+  on_agent_unavailable: warning
+  on_max_rounds: critical
+  on_task_complete: success
