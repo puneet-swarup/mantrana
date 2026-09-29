@@ -1,6 +1,8 @@
 import asyncio
 from pathlib import Path
 
+import pytest
+
 from src.mantrana.clients.fake import FakeClient
 from src.mantrana.config import CouncilConfig
 from src.mantrana.orchestrator import run_council
@@ -16,6 +18,16 @@ SCRIPT: dict[str, list[str]] = {
     "COMPLIANCE": ["COMPLIANCE: requirements"],
     "CODER": ["no code requested"],
 }
+
+
+@pytest.fixture
+def root() -> Path:
+    return Path(__file__).parent.parent
+
+
+@pytest.fixture
+def config(root: Path) -> CouncilConfig:
+    return CouncilConfig.load(root)
 
 
 def test_council_terminates_with_final(root: Path, config: CouncilConfig) -> None:

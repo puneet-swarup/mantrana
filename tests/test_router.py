@@ -1,5 +1,14 @@
+from pathlib import Path
+
+import pytest
+
 from src.mantrana.config import CouncilConfig
 from src.mantrana.router import Router
+
+
+@pytest.fixture
+def config() -> CouncilConfig:
+    return CouncilConfig.load(Path(__file__).parent.parent)
 
 
 def test_parse_targets(config: CouncilConfig) -> None:
