@@ -10,9 +10,7 @@ from .router import Router
 from .tools import ToolRegistry
 
 
-def build_moderator_prompt(
-    config: CouncilConfig, root: Path, log: Log, phase: str
-) -> str:
+def build_moderator_prompt(config: CouncilConfig, root: Path, log: Log, phase: str) -> str:
     catalog = config.read_catalog(root)
     mod_prompt = config.read_prompt(root, config.moderator.prompt)
     return (
@@ -47,9 +45,7 @@ def extract_ask_for(log: Log, role: str) -> str:
     return f"Address the current problem from your role as {role}."
 
 
-async def invoke_role(
-    role: str, log: Log, agents: dict[str, ChatAgent]
-) -> None:
+async def invoke_role(role: str, log: Log, agents: dict[str, ChatAgent]) -> None:
     agent = agents.get(role)
     if agent is None:
         log.append(role, "UNAVAILABLE")

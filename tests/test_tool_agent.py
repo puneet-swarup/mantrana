@@ -45,9 +45,7 @@ def test_tool_agent_returns_prose_when_no_calls(tmp_path: Path) -> None:
 
 
 def test_tool_agent_respects_step_budget(tmp_path: Path) -> None:
-    responses = [
-        '<tool_call name="read_file">{"path": "x"}</tool_call>'
-    ] * 20
+    responses = ['<tool_call name="read_file">{"path": "x"}</tool_call>'] * 20
     agent = _agent(tmp_path, responses)
     result = asyncio.run(agent.respond(Log(), "loop"))
     assert "step budget" in result.text
