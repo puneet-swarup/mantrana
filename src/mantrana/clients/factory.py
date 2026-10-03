@@ -47,9 +47,7 @@ def build_client(
     if kind == "subprocess":
         command = spec.get("command")
         if not command:
-            raise ValueError(
-                f"Model {model!r} uses client 'subprocess' but has no 'command'"
-            )
+            raise ValueError(f"Model {model!r} uses client 'subprocess' but has no 'command'")
         return SubprocessClient(
             command=command,
             session=role,
@@ -61,9 +59,7 @@ def build_client(
     raise UnknownClientKind(f"Unknown client kind {kind!r} for model {model!r}")
 
 
-def build_clients_from_config(
-    root: Path, config: object
-) -> dict[str, ModelClient]:
+def build_clients_from_config(root: Path, config: object) -> dict[str, ModelClient]:
     """Build a {role: client} map for the moderator and every agent.
 
     The moderator is keyed as 'moderator'. Each agent is keyed by its
@@ -74,9 +70,7 @@ def build_clients_from_config(
     clients: dict[str, ModelClient] = {}
 
     moderator_model = config.moderator.model  # type: ignore[attr-defined]
-    clients["moderator"] = build_client(
-        moderator_model, "moderator", registry, working_dir=root
-    )
+    clients["moderator"] = build_client(moderator_model, "moderator", registry, working_dir=root)
 
     for role, acfg in config.agents.items():  # type: ignore[attr-defined]
         clients[role] = build_client(acfg.model, role, registry, working_dir=root)
