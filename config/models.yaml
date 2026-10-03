@@ -1,7 +1,20 @@
+# Model bindings. Each key is a model name referenced by config/council.yaml.
+#
+# client: fake       -> deterministic scripted client (default, no deps)
+# client: subprocess -> drive an external CLI agent (e.g. forge-agent) per role
+#
+# For subprocess clients:
+#   command: the CLI executable on PATH (or absolute path)
+#   timeout: per-query seconds
+
 deepseek:
   client: fake
   site: sites/deepseek.yaml
+  command: forge-agent
+  timeout: 600
 
 qwen:
   client: fake
   site: sites/qwen.yaml
+  command: forge-agent
+  timeout: 600
