@@ -16,4 +16,3 @@ build/
 .env.*
 !.env.example
 .forge-permissions.json
-
