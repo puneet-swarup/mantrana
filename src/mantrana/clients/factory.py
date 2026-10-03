@@ -59,3 +59,26 @@ def build_client(
         )
 
     raise UnknownClientKind(f"Unknown client kind {kind!r} for model {model!r}")
+
+
+def build_clients_from_config(
+    root: Path, config: object
+) -> dict[str, ModelClient]:
+    """Build a {role: client} map for the moderator and every agent.
+
+    The moderator is keyed as 'moderator'. Each agent is keyed by its
+    role name. Clients are constructed from config/models.yaml via each
+    role's bound model name.
+    """
+    registry = load_model_registry(root)
+    clients: dict[str, ModelClient] = {}
+
+    moderator_model = config.moderator.model  # type: ignore[attr-defined]
+    clients["moderator"] = build_client(
+        moderator_model, "moderator", registry, working_dir=root
+    )
+
+    for role, acfg in config.agents.items():  # type: ignore[attr-defined]
+        clients[role] = build_client(acfg.model, role, registry, working_dir=root)
+
+    return clients
