@@ -1,0 +1,45 @@
+site_name: Mantrana
+site_description: A council of AI agents with moderator-driven dynamic routing
+repo_url: https://github.com/puneet-swarup/mantrana
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Phases: phases.md
+  - Contributing: contributing.md
