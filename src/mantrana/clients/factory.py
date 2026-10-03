@@ -47,9 +47,7 @@ def build_client(
     if kind == "subprocess":
         command = spec.get("command")
         if not command:
-            raise ValueError(
-                f"Model {model!r} uses client 'subprocess' but has no 'command'"
-            )
+            raise ValueError(f"Model {model!r} uses client 'subprocess' but has no 'command'")
         return SubprocessClient(
             command=command,
             session=role,

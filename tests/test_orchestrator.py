@@ -2,7 +2,6 @@ import asyncio
 from pathlib import Path
 
 import pytest
-
 from src.mantrana.clients.fake import FakeClient
 from src.mantrana.config import CouncilConfig
 from src.mantrana.orchestrator import run_council
