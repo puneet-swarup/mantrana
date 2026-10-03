@@ -138,7 +138,9 @@ See [`docs/phases.md`](docs/phases.md) for details on each phase.
 ## Quick start
 
 **Phase 0 runs with fake clients** — no browser, no LLM, no API keys.
-Full council loop executes in under a second.
+The full council loop executes in under a second. Switch any role to a real
+backend by setting its `client` kind in `config/models.yaml` (for example
+`subprocess`, to drive a CLI agent per role with its own session).
 
 ```bash
 git clone https://github.com/puneet-swarup/mantrana.git
@@ -174,6 +176,26 @@ COUNCIL LOG
 [MODERATOR]: <final>Council converged on a modular, event-sourced design...
 ======================================================================
 ```
+## Running against real backends
+
+By default every role binds to the fake client, so the loop is deterministic
+and needs no network. To route a role through a real backend, edit
+`config/models.yaml` and set that model's `client` kind:
+
+    deepseek:
+      client: subprocess
+      command: forge-agent
+      timeout: 600
+
+The subprocess client spawns the named CLI once per query and passes the
+prompt on stdin. It sets `FORGE_SESSION_NAME` and `FORGE_ROLE` to the role
+name, so each role gets its own isolated session and can run concurrently.
+
+The CODER role additionally drives a tool loop: it parses tool_call blocks
+from the model, executes them against a root-sandboxed registry
+(read_file, write_file, append_to_file, run_shell, raise_alarm), and loops
+until the model emits a final block.
+
 ## Project layout
 ```text
 mantrana/

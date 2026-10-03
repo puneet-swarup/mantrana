@@ -1,4 +1,4 @@
-"""The council loop. Structure only — no model names, no prompts, no selectors."""
+"""The council loop. Structure only - no model names, no prompts, no selectors."""
 
 from pathlib import Path
 
@@ -7,6 +7,7 @@ from .clients.base import ModelClient
 from .config import CouncilConfig
 from .log import Log
 from .router import Router
+from .tools import ToolRegistry
 
 
 def build_moderator_prompt(config: CouncilConfig, root: Path, log: Log, phase: str) -> str:
@@ -27,7 +28,8 @@ def build_agents(
         prompt = config.read_prompt(root, acfg.prompt)
         client = clients[role]
         if acfg.type == "tool_agent":
-            agents[role] = ToolAgent(role, acfg, prompt, client)
+            registry = ToolRegistry(root)
+            agents[role] = ToolAgent(role, acfg, prompt, client, registry=registry)
         else:
             agents[role] = ChatAgent(role, acfg, prompt, client)
     return agents
@@ -67,7 +69,7 @@ async def run_council(
     log.pin("CATALOG", config.read_catalog(root))
     log.pin("PROBLEM", problem)
 
-    # Turn 1 — bootstrap
+    # Turn 1 - bootstrap
     mod_prompt = build_moderator_prompt(config, root, log, "bootstrap")
     mod_reply = await moderator.query(mod_prompt)
     log.append("MODERATOR", mod_reply)
@@ -95,7 +97,7 @@ async def run_council(
         next_targets = router.parse_targets(mod_reply)
 
         if "CODER" in next_targets:
-            log.append("CODER", "[tool loop — Phase 2 placeholder]")
+            await invoke_role("CODER", log, agents)
             break
 
         for target in next_targets:

@@ -1,7 +1,12 @@
 """Model clients."""
 
 from .base import ModelClient
-from .factory import UnknownClientKind, build_client, load_model_registry
+from .factory import (
+    UnknownClientKind,
+    build_client,
+    build_clients_from_config,
+    load_model_registry,
+)
 from .fake import FakeClient
 from .subprocess_client import SubprocessClient
 
@@ -11,5 +16,6 @@ __all__ = [
     "SubprocessClient",
     "UnknownClientKind",
     "build_client",
+    "build_clients_from_config",
     "load_model_registry",
 ]
